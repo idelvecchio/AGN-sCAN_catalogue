@@ -1,4 +1,4 @@
-The main survey paper (preliminary version in progress) is available at:
+The main AGN-sCAN survey paper (Delvecchio et al. 2025, in preparation) is available (and regularly updated) at:
 https://drive.google.com/file/d/1iVKsXwBbJ27QsIPKbKPpQ58fFxR1CUha/view?usp=sharing
 
 If you would like to download all VLBA .fits images, please do so from this google drive link:
