@@ -1,0 +1,78 @@
+*** Edited by Ivan Delvecchio (ivan.delvecchio@inaf.it)
+*** Version: June 10, 2025
+*** It contains 501 sources (500 targets + the pointing center) selected as follows:
+
+- redshift greater than 0.5: zbest > 0.5
+- IR-detected: SNR_IR >= 5 || flag_A3COSMOS=="true"
+- Radio 1.4GHz flux higher than 5xrms (=24.97 uJy), where "rms" is measured at the pointing center: f1p4ghz_final >= 24.97e-6
+- All VLBA detections from Herrera Ruiz(+2017, 2018) have been removed
+
+
+####---------------------------------------     VLBA part     -------------------------------------------------------------------------
+1) id_vlba: running numer of the VLBA catalog
+2) RUNNING_ID_name: fits filename
+3) bmaj: beam major axis [mas]
+4) bmin: beam minor axis [mas]
+5) bpa: beam position angle [deg]
+6) ra_peak: RA of the VLBA peak with highest S/N within 0.4" from the counterpart [deg]
+7) dec_peak: DEC of the VLBA peak with highest S/N within 0.4" from the counterpart [deg]
+8) ra_peak_err: error on ra_peak [deg] from BLOBCAT
+9) dec_peak_err: error on dec_peak [deg] from BLOBCAT
+10) p_spur: probability of the peak being spurious (from simulations), depending on "snr_peak"
+11) rms_image: median rms of the VLBA image [Jy/bm] obtained from BLOBCAT
+12) peak_flux: peak flux of the VLBA image [Jy/bm] obtained from BLOBCAT
+13) peak_dflux: error on peak flux of the VLBA image [Jy/bm] obtained from BLOBCAT
+14) snr_peak: peak S/N (=peak_flux/rms_image) obtained from BLOBCAT
+15) tot_flux: integrated flux of the VLBA image [Jy/bm] obtained from BLOBCAT
+16) tot_dflux: error on integrated flux of the VLBA image [Jy/bm] obtained from BLOBCAT
+17) snr_tot: integrated S/N (=tot_flux/rms_image) obtained from BLOBCAT
+18) FLUX_VLBA: best VLBA 1.4GHz flux [Jy] ---> Set to match "tot_flux" for detections (snr_peak > 5.5 and sep_arcsec < 0.2), except if unresolved, or to "peak_flux" otherwise
+19) L_VLBA: rest-frame VLBA 1.4GHz luminosity corresponding to FLUX_VLBA [log W/Hz]
+20) L_VLBA_1sigma: rest-frame VLBA 1.4GHz luminosity corresponding to "rms image" (useful to get luminosity limit for non-detections) [log W/Hz]
+21) sep_arcsec: angular separation between VLBA peak and the closest opt/NIR/VLA counterpart [arcsec]
+####---------------------------------------    MULTI-WAVELENGTH PART    ---------------------------------------------------------------
+22) ID_COSMOS: ID from the COSMOS2025 catalog (Shuntov+2025)
+23) RA_counterpart: Right Ascension of the closest VLA or JWST counterpart [deg]
+24) DEC_counterpart: Declination of the closest VLA or JWST counterpart [deg]
+25) cat_ctp: RA-DEC counterpart catalog
+26) zbest: best available redshift of the optical/NIR counterpart (=zspec if reliable, zphot otherwise)
+27) zphot: Photometric redshift - obtained from Shuntov+2025
+28) zspec: spectroscopic redshift from the COSMOS zspec compilation (Khostovan+2025)
+29) zspec_ref: reference code for zspec (if available) (see Khostovan+2025)
+30) Mstar: galaxy stellar mass [log Msun] in Chabrier IMF - obtained from LePhare SED-fitting (Shuntov+2025)
+31) SNR_IR: combined 100um-to-1.2mm signal-to-noise
+32) SFR_IR: star formation rate estimated from SED-fitting assuming a Kennicutt (1998) conversion - Chabrier IMF [Msun/yr]
+33) eSFR_IR: error on SFR_IR [Msun/yr]
+34) vla_slope: spectral index obtained between 1.4GHz (or 1.3GHz) and 3GHz
+35) f1p4ghz_peak_final: best 1.4GHz peak flux (from VLA-1.4GHz or MIGHTEE-1.3GHz map) [Jy/bm]
+36) f1p4ghz_final: best 1.4GHz total flux (from VLA-1.4GHz or MIGHTEE-1.3GHz map) [Jy]
+37) df1p4ghz_final: error on f1p4ghz_final [Jy]
+38) f3ghz_peak: Peak VLA 3GHz flux (Smolcic map) [Jy/bm]
+39) f3ghz: Super-deblended VLA 3GHz flux (Smolcic+2017 map) [Jy]
+40) df3ghz: Error on f3ghz [Jy]
+41) f1p4ghz: Super-deblended VLA-1.4GHz flux (Schinnerer+2010 map) [Jy]
+42) df1p4ghz: Error on f1p4ghz [Jy]
+43) f1p3ghz: Super-deblended MIGHTEE flux in 9" beam image [Jy]
+44) df1p3ghz: Error on f1p3ghz [Jy]
+45) f600mhz: Super-deblended flux in GMRT-610MHz image [Jy]
+46) df600mhz: Error on f600mhz [Jy]
+47) f300mhz: Super-deblended flux in GMRT-325MHz image [Jy]
+48) df300mhz: Error on f300mhz [Jy]
+49) LIR_SD: total IR luminosity (rest-frame 8-1000um) obtained from SED-fitting with Super-Deblended IR fluxes [log Lsun]
+50) Lradio_1p4ghz: 1.4GHz rest-frame radio luminosity (obtained from "f1p4ghz_final") [log W/Hz]
+51) q_IR: IR-to-radio luminosity ratio (prop to log(LIR_SD/Lradio_1p4ghz))
+52) q_IR_z0p5: q_IR rescaled to z=0.5 (to marginalize over different redshifts) by using an empirical q_IR-vs-z trend
+53) flux_ratio_vlba_vla: flux ratio between VLBA and VLA at 1.4GHz (i.e. "FLUX_VLBA" / "f1p4ghz_final")
+54) delta_q_IR: corretion to original q_IR after VLBA subtraction (defined >=0)
+55) q_IR_corr: "q_IR" corrected after VLBA flux subtraction
+56) q_IR_z0p5_corr: "q_IR_z0" corrected after VLBA flux subtraction
+57) flag_A3COSMOS: "true" if detected from the A3COSMOS survey (Liu+2019); "false" otherwise
+58) LIR_A3COSMOS: total IR luminosity obtained from SED-fitting including A3COSMOS data [log Lsun]
+59) id_cluster: cluster member ID
+60) flag_cluster: "true" if inside cluster; "false" otherwise
+61) dist_center_arcmin: distance from the center of the pointing [arcmin]
+62) dist_real_center_arcmin: distance from the **REAL** pointing center used in VLBA-COSMOS [arcmin]
+63) xray_det: "true" if X-ray detected (Chandra COSMOS+Legacy; Marchesi+2016; Civano+2016); "false" otherwise
+64) id_chandra: ID from Chandra catalog
+65) Lx_2_10: rest-frame 2-10 keV intrinsic luminosity [log erg/s], -99. if xray_det = "false"
+
